@@ -1,8 +1,9 @@
 # Import the QueryBase class
-from .query_base import QueryBase
+from .query_base import QueryBase, validate_id
 
 # Import dependencies for sql execution
 from .sql_execution import query
+
 
 # Create a subclass of QueryBase
 # called  `Team`
@@ -12,14 +13,12 @@ class Team(QueryBase):
     # to the string "team"
     name = "team"
 
-
     # Define a `names` method
     # that receives no arguments
     # This method should return
     # a list of tuples from an sql execution
     @query
     def names(self):
-        
         # Query 5
         # Write an SQL query that selects
         # the team_name and team_id columns
@@ -29,7 +28,6 @@ class Team(QueryBase):
             SELECT team_name, team_id
             FROM team
         """
-    
 
     # Define a `username` method
     # that receives an ID argument
@@ -37,6 +35,8 @@ class Team(QueryBase):
     # a list of tuples from an sql execution
     @query
     def username(self, id):
+        # Validate id to prevent SQL injection
+        id = validate_id(id)
 
         # Query 6
         # Write an SQL query
@@ -50,7 +50,6 @@ class Team(QueryBase):
             WHERE team_id = {id}
         """
 
-
     # Below is method with an SQL query
     # This SQL query generates the data needed for
     # the machine learning model.
@@ -59,6 +58,8 @@ class Team(QueryBase):
     # is returns containing the execution of
     # the sql query
     def model_data(self, id):
+        # Validate id to prevent SQL injection
+        id = validate_id(id)
 
         sql_query = f"""
             SELECT positive_events, negative_events FROM (

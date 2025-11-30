@@ -49,8 +49,8 @@ def plot_ml_performance(dept_counts, outpath):
         data = np.array([[10], [20], [30], [40], [50]])
         labels = [f'Dept {i+1}' for i in range(5)]
 
-    # Perform KMeans clustering (use 2 clusters or fewer if not enough data)
-    n_clusters = min(2, len(data))
+    # Perform KMeans clustering (always use at least 2 clusters)
+    n_clusters = max(2, min(2, len(data)))
     kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
     kmeans.fit(data)
 
